@@ -7,242 +7,334 @@ public class CollectionPerformance {
 
     static volatile long result;
 
-    // Test 1: Add elements at the end
-    static long testArrayListAdd(int size) {
-        ArrayList<Integer> list = new ArrayList<>();
+    static final int REPETITIONS = 5;
+    static final int OPERATIONS = 100;
+    static final int ACCESS_OPERATIONS = 100;
 
-        long start = System.nanoTime();
-
-        for (int i = 0; i < size; i++) {
-            list.add(i);
-        }
-
-        long end = System.nanoTime();
-        result = list.size();
-
-        return end - start;
-    }
-
-    static long testLinkedListAdd(int size) {
-        LinkedList<Integer> list = new LinkedList<>();
-
-        long start = System.nanoTime();
-
-        for (int i = 0; i < size; i++) {
-            list.add(i);
-        }
-
-        long end = System.nanoTime();
-        result = list.size();
-
-        return end - start;
-    }
-
-    static long testArrayDequeAdd(int size) {
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
-
-        long start = System.nanoTime();
-
-        for (int i = 0; i < size; i++) {
-            deque.addLast(i);
-        }
-
-        long end = System.nanoTime();
-        result = deque.size();
-
-        return end - start;
-    }
-
-    // Test 2: Traverse all elements
-    static long testArrayListTraversal(int size) {
-        ArrayList<Integer> list = createArrayList(size);
-
-        long sum = 0;
-        long start = System.nanoTime();
-
-        for (int value : list) {
-            sum += value;
-        }
-
-        long end = System.nanoTime();
-        result = sum;
-
-        return end - start;
-    }
-
-    static long testLinkedListTraversal(int size) {
-        LinkedList<Integer> list = createLinkedList(size);
-
-        long sum = 0;
-        long start = System.nanoTime();
-
-        for (int value : list) {
-            sum += value;
-        }
-
-        long end = System.nanoTime();
-        result = sum;
-
-        return end - start;
-    }
-
-    static long testArrayDequeTraversal(int size) {
-        ArrayDeque<Integer> deque = createArrayDeque(size);
-
-        long sum = 0;
-        long start = System.nanoTime();
-
-        for (int value : deque) {
-            sum += value;
-        }
-
-        long end = System.nanoTime();
-        result = sum;
-
-        return end - start;
-    }
-
-    // Test 3: Remove elements from the beginning
-    static long testArrayListRemove(int size) {
-        ArrayList<Integer> list = createArrayList(size);
-
-        long start = System.nanoTime();
-
-        while (!list.isEmpty()) {
-            list.remove(0);
-        }
-
-        long end = System.nanoTime();
-        result = list.size();
-
-        return end - start;
-    }
-
-    static long testLinkedListRemove(int size) {
-        LinkedList<Integer> list = createLinkedList(size);
-
-        long start = System.nanoTime();
-
-        while (!list.isEmpty()) {
-            list.removeFirst();
-        }
-
-        long end = System.nanoTime();
-        result = list.size();
-
-        return end - start;
-    }
-
-    static long testArrayDequeRemove(int size) {
-        ArrayDeque<Integer> deque = createArrayDeque(size);
-
-        long start = System.nanoTime();
-
-        while (!deque.isEmpty()) {
-            deque.removeFirst();
-        }
-
-        long end = System.nanoTime();
-        result = deque.size();
-
-        return end - start;
-    }
-
-    // Collection creation methods
+    // Create collections before starting the timer.
     static ArrayList<Integer> createArrayList(int size) {
         ArrayList<Integer> list = new ArrayList<>();
-
         for (int i = 0; i < size; i++) {
             list.add(i);
         }
-
         return list;
     }
 
     static LinkedList<Integer> createLinkedList(int size) {
         LinkedList<Integer> list = new LinkedList<>();
-
         for (int i = 0; i < size; i++) {
             list.add(i);
         }
-
         return list;
     }
 
     static ArrayDeque<Integer> createArrayDeque(int size) {
         ArrayDeque<Integer> deque = new ArrayDeque<>();
-
         for (int i = 0; i < size; i++) {
             deque.addLast(i);
         }
-
         return deque;
     }
 
-    // Display results
+    // Add elements at the end.
+    static long arrayAdd(int size) {
+        ArrayList<Integer> list = new ArrayList<>();
+        long start = System.nanoTime();
+
+        for (int i = 0; i < size; i++) {
+            list.add(i);
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    static long linkedAdd(int size) {
+        LinkedList<Integer> list = new LinkedList<>();
+        long start = System.nanoTime();
+
+        for (int i = 0; i < size; i++) {
+            list.add(i);
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    // Traverse all elements.
+    static long arrayTraversal(int size) {
+        ArrayList<Integer> list = createArrayList(size);
+        long sum = 0;
+
+        long start = System.nanoTime();
+        for (int value : list) {
+            sum += value;
+        }
+
+        long time = System.nanoTime() - start;
+        result = sum;
+        return time;
+    }
+
+    static long linkedTraversal(int size) {
+        LinkedList<Integer> list = createLinkedList(size);
+        long sum = 0;
+
+        long start = System.nanoTime();
+        for (int value : list) {
+            sum += value;
+        }
+
+        long time = System.nanoTime() - start;
+        result = sum;
+        return time;
+    }
+
+    // Remove elements from the beginning.
+    static long arrayRemoveFirst(int size) {
+        ArrayList<Integer> list = createArrayList(size);
+
+        long start = System.nanoTime();
+        while (!list.isEmpty()) {
+            list.remove(0);
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    static long linkedRemoveFirst(int size) {
+        LinkedList<Integer> list = createLinkedList(size);
+
+        long start = System.nanoTime();
+        while (!list.isEmpty()) {
+            list.removeFirst();
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    // Insert repeatedly at the beginning.
+    static long arrayInsertFirst(int size) {
+        ArrayList<Integer> list = createArrayList(size);
+
+        long start = System.nanoTime();
+        for (int i = 0; i < OPERATIONS; i++) {
+            list.add(0, -i);
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    static long linkedInsertFirst(int size) {
+        LinkedList<Integer> list = createLinkedList(size);
+
+        long start = System.nanoTime();
+        for (int i = 0; i < OPERATIONS; i++) {
+            list.add(0, -i);
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    // Insert repeatedly at the middle.
+    static long arrayInsertMiddle(int size) {
+        ArrayList<Integer> list = createArrayList(size);
+
+        long start = System.nanoTime();
+        for (int i = 0; i < OPERATIONS; i++) {
+            list.add(list.size() / 2, -i);
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    static long linkedInsertMiddle(int size) {
+        LinkedList<Integer> list = createLinkedList(size);
+
+        long start = System.nanoTime();
+        for (int i = 0; i < OPERATIONS; i++) {
+            list.add(list.size() / 2, -i);
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    // Remove repeatedly from the middle.
+    static long arrayRemoveMiddle(int size) {
+        ArrayList<Integer> list = createArrayList(size);
+
+        long start = System.nanoTime();
+        for (int i = 0; i < OPERATIONS; i++) {
+            list.remove(list.size() / 2);
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    static long linkedRemoveMiddle(int size) {
+        LinkedList<Integer> list = createLinkedList(size);
+
+        long start = System.nanoTime();
+        for (int i = 0; i < OPERATIONS; i++) {
+            list.remove(list.size() / 2);
+        }
+
+        long time = System.nanoTime() - start;
+        result = list.size();
+        return time;
+    }
+
+    // Access the middle element repeatedly.
+    static long arrayKthAccess(int size) {
+        ArrayList<Integer> list = createArrayList(size);
+        long sum = 0;
+        int k = size / 2;
+
+        long start = System.nanoTime();
+        for (int i = 0; i < ACCESS_OPERATIONS; i++) {
+            sum += list.get(k);
+        }
+
+        long time = System.nanoTime() - start;
+        result = sum;
+        return time;
+    }
+
+    static long linkedKthAccess(int size) {
+        LinkedList<Integer> list = createLinkedList(size);
+        long sum = 0;
+        int k = size / 2;
+
+        long start = System.nanoTime();
+        for (int i = 0; i < ACCESS_OPERATIONS; i++) {
+            sum += list.get(k);
+        }
+
+        long time = System.nanoTime() - start;
+        result = sum;
+        return time;
+    }
+
+    static double average(long total) {
+        return total / (double) REPETITIONS / 1_000_000.0;
+    }
+
+    static void printComparison(String title, long arrayTime,
+                                long linkedTime) {
+        System.out.println("\n" + title);
+        System.out.printf("ArrayList   : %.3f ms%n", average(arrayTime));
+        System.out.printf("LinkedList  : %.3f ms%n", average(linkedTime));
+    }
+
     static void runExperiment(int size) {
 
-        int repetitions = 5;
+        long arrayAdd = 0, linkedAdd = 0;
+        long arrayTraversal = 0, linkedTraversal = 0;
+        long arrayRemoveFirst = 0, linkedRemoveFirst = 0;
+        long arrayInsertFirst = 0, linkedInsertFirst = 0;
+        long arrayInsertMiddle = 0, linkedInsertMiddle = 0;
+        long arrayRemoveMiddle = 0, linkedRemoveMiddle = 0;
+        long arrayKth = 0, linkedKth = 0;
+
+        // Warm-up.
+        for (int i = 0; i < 2; i++) {
+            arrayAdd(100);
+            linkedAdd(100);
+            arrayTraversal(100);
+            linkedTraversal(100);
+            arrayRemoveFirst(100);
+            linkedRemoveFirst(100);
+            arrayInsertFirst(100);
+            linkedInsertFirst(100);
+            arrayInsertMiddle(100);
+            linkedInsertMiddle(100);
+            arrayRemoveMiddle(100);
+            linkedRemoveMiddle(100);
+            arrayKthAccess(100);
+            linkedKthAccess(100);
+        }
+
+        for (int i = 0; i < REPETITIONS; i++) {
+            arrayAdd += arrayAdd(size);
+            linkedAdd += linkedAdd(size);
+
+            arrayTraversal += arrayTraversal(size);
+            linkedTraversal += linkedTraversal(size);
+
+            arrayRemoveFirst += arrayRemoveFirst(size);
+            linkedRemoveFirst += linkedRemoveFirst(size);
+
+            arrayInsertFirst += arrayInsertFirst(size);
+            linkedInsertFirst += linkedInsertFirst(size);
+
+            arrayInsertMiddle += arrayInsertMiddle(size);
+            linkedInsertMiddle += linkedInsertMiddle(size);
+
+            arrayRemoveMiddle += arrayRemoveMiddle(size);
+            linkedRemoveMiddle += linkedRemoveMiddle(size);
+
+            arrayKth += arrayKthAccess(size);
+            linkedKth += linkedKthAccess(size);
+        }
 
         System.out.println("\n======================================");
         System.out.println("COLLECTION SIZE: " + size);
-        System.out.println("Repetitions: " + repetitions);
+        System.out.println("Repetitions: " + REPETITIONS);
+        System.out.println("Insert/remove operations per run: " + OPERATIONS);
+        System.out.println("Kth access operations per run: " + ACCESS_OPERATIONS);
         System.out.println("======================================");
 
-        long arrayAdd = 0;
-        long linkedAdd = 0;
-        long dequeAdd = 0;
-
-        long arrayTraversal = 0;
-        long linkedTraversal = 0;
-        long dequeTraversal = 0;
-
-        long arrayRemove = 0;
-        long linkedRemove = 0;
-        long dequeRemove = 0;
-
-        // Warm-up
-        testArrayListAdd(100);
-        testLinkedListAdd(100);
-        testArrayDequeAdd(100);
-
-        for (int i = 0; i < repetitions; i++) {
-
-            arrayAdd += testArrayListAdd(size);
-            linkedAdd += testLinkedListAdd(size);
-            dequeAdd += testArrayDequeAdd(size);
-
-            arrayTraversal += testArrayListTraversal(size);
-            linkedTraversal += testLinkedListTraversal(size);
-            dequeTraversal += testArrayDequeTraversal(size);
-
-            arrayRemove += testArrayListRemove(size);
-            linkedRemove += testLinkedListRemove(size);
-            dequeRemove += testArrayDequeRemove(size);
-        }
-
-        System.out.println("\nADD AT END (Average ms)");
-        printResults(arrayAdd, linkedAdd, dequeAdd, repetitions);
-
-        System.out.println("\nTRAVERSAL (Average ms)");
-        printResults(arrayTraversal, linkedTraversal,
-                dequeTraversal, repetitions);
-
-        System.out.println("\nREMOVE FROM BEGINNING (Average ms)");
-        printResults(arrayRemove, linkedRemove,
-                dequeRemove, repetitions);
+        printComparison("ADD AT END", arrayAdd, linkedAdd);
+        printComparison("TRAVERSAL", arrayTraversal, linkedTraversal);
+        printComparison("REMOVE FROM BEGINNING",
+                arrayRemoveFirst, linkedRemoveFirst);
+        printComparison("INSERT AT BEGINNING",
+                arrayInsertFirst, linkedInsertFirst);
+        printComparison("INSERT AT MIDDLE",
+                arrayInsertMiddle, linkedInsertMiddle);
+        printComparison("REMOVE FROM MIDDLE",
+                arrayRemoveMiddle, linkedRemoveMiddle);
+        printComparison("KTH ELEMENT ACCESS",
+                arrayKth, linkedKth);
     }
 
-    static void printResults(long a, long l, long d, int repetitions) {
+    // Practical ArrayDeque Up Next queue demonstration.
+    static void demonstrateUpNextQueue() {
+        System.out.println("\n===== ARRAYDEQUE UP NEXT QUEUE =====");
 
-        System.out.printf("ArrayList   : %.3f ms%n",
-                a / (double) repetitions / 1_000_000);
+        ArrayDeque<String> upNext = new ArrayDeque<>();
 
-        System.out.printf("LinkedList  : %.3f ms%n",
-                l / (double) repetitions / 1_000_000);
+        upNext.offerLast("Java");
+        upNext.offerLast("DBMS");
+        upNext.offerLast("DSA");
 
-        System.out.printf("ArrayDeque  : %.3f ms%n",
-                d / (double) repetitions / 1_000_000);
+        System.out.println("Initial queue: " + upNext);
+
+        System.out.println("Now playing: " + upNext.peekFirst());
+
+        System.out.println("Completed: " + upNext.pollFirst());
+
+        upNext.offerLast("System Design");
+
+        System.out.println("Updated Up Next queue: " + upNext);
+
+        System.out.println("Next item: " + upNext.peekFirst());
     }
 
     public static void main(String[] args) {
@@ -254,5 +346,9 @@ public class CollectionPerformance {
         runExperiment(1000);
         runExperiment(10000);
         runExperiment(100000);
+
+        demonstrateUpNextQueue();
+
+        System.out.println("\nAll experiments completed.");
     }
 }
